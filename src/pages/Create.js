@@ -4,11 +4,15 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 // import SendIcon from '@material-ui/icons/Send';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import { makeStyles } from '@material-ui/core';
+import { FormControlLabel, makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles({
-  fiel: {
+  field: {
     marginTop: 20,
     marginBottom: 20,
     display: 'block',
@@ -22,6 +26,7 @@ export default function Create() {
   const [details, setDetails] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [detailsError, setDetailsError] = useState(false);
+  const [category, setCategory] = useState('todos');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +42,7 @@ export default function Create() {
     }
 
     if (title && details) {
-      console.log(title, details);
+      console.log(title, details, category);
     }
   };
 
@@ -55,7 +60,7 @@ export default function Create() {
       <form noValidate autoComplete='off' onSubmit={handleSubmit}>
         <TextField
           onChange={(e) => setTitle(e.target.value)}
-          className={classes.fiel}
+          className={classes.field}
           label='Note Title'
           variant='outlined'
           color='secondary'
@@ -66,7 +71,7 @@ export default function Create() {
 
         <TextField
           onChange={(e) => setDetails(e.target.value)}
-          className={classes.fiel}
+          className={classes.field}
           label='Details'
           variant='outlined'
           color='secondary'
@@ -76,6 +81,23 @@ export default function Create() {
           required
           error={detailsError}
         />
+
+        <FormControl className={classes.field}>
+          <FormLabel>Note Category</FormLabel>
+          <RadioGroup
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <FormControlLabel value='money' control={<Radio />} label='Money' />
+            <FormControlLabel value='todos' control={<Radio />} label='Todos' />
+            <FormControlLabel
+              value='reminders'
+              control={<Radio />}
+              label='Reminders'
+            />
+            <FormControlLabel value='work' control={<Radio />} label='Work' />
+          </RadioGroup>
+        </FormControl>
 
         <Button
           type='submit'
